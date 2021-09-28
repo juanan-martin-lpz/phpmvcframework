@@ -1,0 +1,12 @@
+{
+    "name": "blackraider/gestioncomercial",
+    "authors": [
+        {
+            "name": "juanan-martin-lpz",
+            "email": "juanan.martin.lpz@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
