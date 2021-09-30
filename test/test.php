@@ -2,13 +2,15 @@
 
 
 require '../src/Models/ModelBase.php';
+require '../src/Models/Pedidos.php';
+require '../src/Models/Factories/PedidosFactory.php';
 
-
+/*
 class Pedidos extends ModelBase {
 
 
-    private $idpedido;
-    private $idcliente;
+    private int $idpedido;
+    private int $idcliente;
 
 
     public function save() {
@@ -27,8 +29,8 @@ class Pedidos extends ModelBase {
     public function setIdCliente(int $cliente) {
         $this->idcliente = $cliente;
     }
-}
 
+}
 
 class PedidoFactory implements IConcreteModelFactory {
 
@@ -49,6 +51,7 @@ class PedidoFactory implements IConcreteModelFactory {
     }
 
 }
+*/
 
 
 class Albaranes extends ModelBase {
@@ -100,34 +103,50 @@ class AlbaranFactory implements IConcreteModelFactory {
 
 }
 
-$config = new DatabaseConfig();
 
-$config->host = 'localhost';
-$config->port = 3306;
-$config->user = 'root';
-$config->password = 'Defender100';
-$config->databasename = 'gestioncomercial';
 
-$test = new Pedidos();
 
-// Algo mejor que con un metodo de instancia
-ModelBase::setDatabaseConfig($config);
+// Configuramos el acceso a la base de datos
+$config = DatabaseConfig::fromJSON('../src/Config/dbconfig.json');
+Database::setDatabaseConfig($config);
 
-// Comprobamos que se propaga la conexion a las instancias
-var_dump(Pedidos::getDatabaseConfig());
+
+// Buscamos todos los pedidos mediante factoria
+$result = Pedidos::findAll( PedidoFactory::class );
+
+echo 'Dataset con Factoria <br>';
+
+foreach($result as $pedido) {
+
+    echo $pedido->getIdPedido() . " - " . $pedido->getIdCliente() . " - " .  $pedido->getIdFormaPago() . "<br>";
+}
+
+// Si no se le pasa nos devuelve un array de objetos planos, con las propiedades con el mismo nombre de los campos
+// Puede ser util para objetos u operaciones triviales
+$result2 = Pedidos::findAll();
+
 echo '<br>';
 
-var_dump(Albaranes::getDatabaseConfig());
-echo '<br>';
-
-
-
-// Hay que pasarle la clase
-$result = Pedidos::findAll( 'PedidoFactory' );
-
+/*
+echo 'Dataset con Factoria <br>';
 
 foreach($result as $r) {
     var_dump($r);
 }
+*/
 
+echo '<br>';
+
+echo 'Dataset con Plain Objects <br>';
+
+foreach($result2 as $pedido) {
+
+    echo $pedido->idpedido . " - " . $pedido->idcliente . " - " .  $pedido->idforma_pago . "<br>";
+}
+
+/*
+foreach($result2 as $r) {
+    var_dump($r);
+}
+*/
 ?>

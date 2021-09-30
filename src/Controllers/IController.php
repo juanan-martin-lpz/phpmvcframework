@@ -1,7 +1,7 @@
 <?php
 
 interface IController {
-    public function doGet();
-    public function doPost();
+    public function doGet($request);
+    public function doPost($request);
 }
 ?>
