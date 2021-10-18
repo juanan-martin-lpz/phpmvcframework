@@ -1,6 +1,10 @@
 <?php
 
-require_once 'IRouter.php';
+//require_once 'IRouter.php';
+
+namespace GestionComercial\Controllers;
+
+require '../vendor/autoload.php';
 
 class RequestDispatcher {
 

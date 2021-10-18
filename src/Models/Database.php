@@ -1,5 +1,9 @@
 <?php
 
+namespace GestionComercial\Models;
+
+require '../vendor/autoload.php';
+
 class Database {
 
     private static $connection = null;
@@ -8,11 +12,7 @@ class Database {
 
     public static function connect() {
 
-        // De donde sacamos los params???
-
         if (self::$config != null ) {
-
-            //self::$connection = mysqli_connect(self::$config->host, self::$config->user, self::$config->password, self::$config->databasename, self::$config->port );
 
             self::$connection = new PDO( self::$config->driver . ':host=' . self::$config->host . ';port=' . self::$config->port . ';dbname=' . self::$config->databasename,  self::$config->user, self::$config->password);
 
@@ -29,17 +29,12 @@ class Database {
 
     public static function close() {
 
-        /*
-        if (self::$connection) {
-            self::$connection->close();
-        }
-        */
         self::$connection = null;
 
     }
 
     public static function query(string $sql, $factory = null) {
-                // conectar
+        // conectar
         self::connect();
 
         // ejecutar

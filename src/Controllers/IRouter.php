@@ -1,5 +1,9 @@
 <?php
 
+namespace GestionComercial\Controllers;
+
+require '../vendor/autoload.php';
+
 require 'IController.php';
 
 interface IRouter {

@@ -1,5 +1,15 @@
 <?php
 
+namespace GestionComercial\Models;
+
+require '../vendor/autoload.php';
+
+/* Salvaguarda de ejecucion */
+
+if ($_SERVER['PHP_SELF']) {
+    return "404";
+}
+
 class Pedidos extends ModelBase {
 
 

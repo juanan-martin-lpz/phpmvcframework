@@ -1,8 +1,12 @@
 <?php
 
-require 'Controllers/RequestDispatcher.php';
-require 'Controllers/DefaultRouter.php';
-require 'Controllers/PedidosController.php';
+//require 'Controllers/RequestDispatcher.php';
+//require 'Controllers/DefaultRouter.php';
+//require 'Controllers/PedidosController.php';
+
+namespace GestionComercial;
+
+require '../vendor/autoload.php';
 
 function debug_to_console($data) {
     $output = $data;
@@ -13,12 +17,12 @@ function debug_to_console($data) {
 }
 
 // Crear las rutas de la aplicacion, requiere de los controladores especificos, pero solo haremos un require_once
-$router = new DefaultRouter();
+$router = new Controllers\DefaultRouter();
 
-$router->add('/src/pedidos', new PedidosController());
+$router->add('/pedidos', new Controllers\PedidosController());
 
 // Creamos el dispatcher
-$dispatcher = new RequestDispatcher($router);
+$dispatcher = new Controllers\RequestDispatcher($router);
 
 // Despachamos
 echo $dispatcher->dispatch();

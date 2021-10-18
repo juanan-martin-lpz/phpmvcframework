@@ -1,8 +1,12 @@
 <?php
 
-require 'Database.php';
-require 'DatabaseConfig.php';
-require 'IConcreteModelFactory.php';
+//require 'Database.php';
+//require 'DatabaseConfig.php';
+//require 'IConcreteModelFactory.php';
+
+namespace GestionComercial\Models;
+
+require '../vendor/autoload.php';
 
 abstract class ModelBase {
 

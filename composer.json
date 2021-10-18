@@ -8,5 +8,15 @@
     ],
     "require-dev": {
         "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+      "psr-4": {"GestionComercial\\": "src/",
+                "GestionComercial\\Controllers\\": "src/Controllers/",
+                "GestionComercial\\Models\\": "src/Models/",
+                "GestionComercial\\Views\\": "src/Views/"
+               }
+    },
+    "scripts": {
+      "serve": "php -S localhost:3200 -t ./src"
     }
 }

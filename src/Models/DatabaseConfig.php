@@ -1,5 +1,9 @@
 <?php
 
+namespace GestionComercial\Models;
+
+require '../vendor/autoload.php';
+
 class DatabaseConfig {
 
 

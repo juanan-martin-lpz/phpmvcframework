@@ -1,6 +1,10 @@
 <?php
 
-require_once 'IRouter.php';
+//require_once 'IRouter.php';
+
+namespace GestionComercial\Controllers;
+
+require '../vendor/autoload.php';
 
 class DefaultRouter implements IRouter {
 
@@ -26,8 +30,6 @@ class DefaultRouter implements IRouter {
         $controller = null;
 
         $controller = @$this->routes[$request['url']];
-
-        var_dump($this->routes);
 
         // Ruta parcial
         if (!$controller) {
