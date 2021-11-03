@@ -2,7 +2,7 @@
 
 namespace GestionComercial\Models;
 
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 class Database {
 
@@ -14,7 +14,7 @@ class Database {
 
         if (self::$config != null ) {
 
-            self::$connection = new PDO( self::$config->driver . ':host=' . self::$config->host . ';port=' . self::$config->port . ';dbname=' . self::$config->databasename,  self::$config->user, self::$config->password);
+            self::$connection = new \PDO( self::$config->driver . ':host=' . self::$config->host . ';port=' . self::$config->port . ';dbname=' . self::$config->databasename,  self::$config->user, self::$config->password);
 
             if (!self::$connection) {
 

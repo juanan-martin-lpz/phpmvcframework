@@ -6,7 +6,7 @@
 
 namespace GestionComercial\Models;
 
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 abstract class ModelBase {
 
@@ -66,7 +66,11 @@ abstract class ModelBase {
             throw new Exception("La factoria no es del tipo esperado");
         }
 
-        $sql = "SELECT * FROM " . strtoupper(get_called_class()) . ';';
+        $path = explode('\\', get_called_class());
+
+        $tabla = end($path);
+
+        $sql = "SELECT * FROM " . strtoupper($tabla) . ';';
 
         $result = Database::query($sql, $factory);
 

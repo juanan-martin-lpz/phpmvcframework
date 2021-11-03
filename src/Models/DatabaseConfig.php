@@ -2,7 +2,7 @@
 
 namespace GestionComercial\Models;
 
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 class DatabaseConfig {
 

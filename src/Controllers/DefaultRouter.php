@@ -4,17 +4,24 @@
 
 namespace GestionComercial\Controllers;
 
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 class DefaultRouter implements IRouter {
 
     private array $routes;
+    private $parser;
 
-    public function __construct() {
+    public function __construct(/* $parser = null */) {
+
+        //$this->parser = $parser;
+        //$this->registry = $registry;
+
         $this->routes = [];
     }
 
     public function add(string $route, IController $controller) {
+        // Parser
+        // $controler->setParser($this->parser);
         $this->routes[$route] = $controller;
     }
 

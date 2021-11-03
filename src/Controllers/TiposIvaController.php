@@ -6,16 +6,16 @@ namespace GestionComercial\Controllers;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use GestionComercial\Controllers\Actions\Pedidos as PedidosActions;
+use GestionComercial\Controllers\Actions\TiposIva as Actions;
 
-class PedidosController extends ControllerBase {
+class TiposIvaController extends ControllerBase {
 
     public function __construct() {
 
         // Creamos las acciones. Algunas necesitaran del parser para poder pasarselo a las Vistas
         // Otras quizas no porque sean solo html
 
-        $this->addAction('', new PedidosActions\PedidosDefaultAction($this->getParser()));
+        $this->addAction('', new Actions\TiposIvaDefaultAction());
 
     }
 
@@ -25,7 +25,6 @@ class PedidosController extends ControllerBase {
         // Si vienen en la url podria ser tipo edit/id o detail/id
         // Pero tambien podrian venir via query string edit=true;id=1
         // Esto no es personalizable aunque puede ser estandarizado de una forma u otra
-        /*
         $action = null;
         $data = null;
 
@@ -35,6 +34,11 @@ class PedidosController extends ControllerBase {
             $data = $request['params'][1];
         }
 
+        if ($action == null) {
+
+            return parent::doGet($request);
+        }
+        /*
 
         if ($request['query']) {
 
@@ -50,7 +54,6 @@ class PedidosController extends ControllerBase {
         */
 
         // Llamar al doGet del padre si la accion sera ejecutar una IAction
-        return parent::doGet($request);
     }
 
     public function doPost($request): string

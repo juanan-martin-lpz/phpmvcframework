@@ -1,0 +1,26 @@
+{
+    "name": "blackraider/gestioncomercial",
+    "authors": [
+        {
+            "name": "juanan-martin-lpz",
+            "email": "juanan.martin.lpz@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+      "psr-4": {"GestionComercial\\": ".",
+                "GestionComercial\\Controllers\\": "./Controllers/",
+                "GestionComercial\\Controllers\\Actions\\Pedidos\\": "./Controllers/Actions/Pedidos/",
+                "GestionComercial\\Models\\": "./Models/",
+                "GestionComercial\\Views\\": "./Views/",
+                "GestionComercial\\Views\\Pedidos\\": "./Views/Pedidos",
+                "GestionComercial\\CL\\Parser\\": "./CL/Parser/",
+                "GestionComercial\\CL\\Parser\\Contexts\\": "./CL/Parser/Contexts/"
+               }
+    },
+    "scripts": {
+      "serve": "php -S localhost:3200 -t ."
+    }
+}

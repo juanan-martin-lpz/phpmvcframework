@@ -1,0 +1,119 @@
+PROYECTO FIN DE CURSO IFCD0112 - ADF
+
+PROGRAMACION ORIENTADA A OBJETOS CON BASES DE DATOS RELACIONALES
+
+AUTOR: Juan Antonio Martin
+
+OBJETIVOS DEL PROYECTO
+
+El proyecto pretende llevar a cabo una Gestion de Compras, para lo que se realizo en el Modulo 2 del curso la base de datos,
+siguiendo un patron/arquitectura Modelo-Vista-Controlador basado en cierto modo en la forma de funcionar de Angular, basado en componentes
+solo que adaptado para el lado del servidor. El proyecto presenta un pequeño interprete de codigo para la vistas de forma que se puedan integrar dentro
+de la generacion de las vistas/componentes los datos de usuario necesarios para cada caso.
+
+ARQUITECTURA
+
+La arquitectura de la aplicacion se basa en cuatro componentes clave, a saber:
+
+   * Enrutamiento
+   * Controladores
+   * Vistas
+   * Modelo y acceso a datos
+
+ENRUTAMIENTO
+
+El sistema procesa las url dirigidas a el comprobando las rutas, totales y parciales con las registradas en la aplicacion, de forma similar a como hace
+Express para Javascript y Nodejs.
+Para ello necesitaremos un Router y al menos un Controller:
+
+     $router = new Controllers\DefaultRouter();
+     $router->add('/tiposiva', new Controllers\TiposIvaController());
+
+DefaultRouter implementa la interfaz IRouter que expone dos metodos, un para añadir controladores y otro para efectuar el enrutado.
+
+Una vez que tenemos el router listo preparamos un Dispatcher que es el componente que se encarga de enrutar las peticiones url a cada uno de los controladores.
+
+    // Creamos el dispatcher
+    $dispatcher = new Controllers\RequestDispatcher($router);
+
+    // Despachamos
+    echo $dispatcher->dispatch();
+
+dispatch devuelve una cadena con el html devuelto por cada ruta por lo que sin mas hacemos un echo para renderizar el html en el navegador.
+
+RequestDispatcher recibe un router y recupera el metodo, la uri y la posible cadena de query de la url y la almacena en un array asociativo
+que es pasado al router.
+
+CONTROLADORES
+
+
+VISTAS
+
+
+MODELO
+
+
+ACCESO A DATOS
+
+
+
+NOTAS DE IMPLEMENTACION
+
+
+      * DISEÑO DE LOS COMPONENTES
+        Los componentes se ha diseñado de forma expresa para que tengan tres filas en un layout de grid: header, main y footer, los tres representados por divs.
+
+      * OTROS
+
+SINTAXIS EN LAS VISTAS
+
+El programam reconoce ciertas estructuras que seran interpretadas de forma que, como ya se menciono, se puedan tener las Vistas orientadas a Componentes.
+
+La caracteristica principal es la de poder integrar tanto en las Vistas como en otros componentes y componente. Este componente se inserta en el html como
+si de un componente web se tratara. Con un formato de etiqueta compuesto por dos cadenas de caracteres separados por un guion medio.
+
+   <mi-componente />
+
+El componente se registra en el index con la cadena a usar en el html y la clase de componente a traves de ComponentRegistry. El programa se encarga de la expansion
+e inclusion del html de dicho componente en la vista o componente que lo integre.
+
+La segunda de las caracteristicas es la expansion de variables. Se puede expandir una variable del programa dentro del html colocando el nombre de la variable entre llaves
+
+   {{variable}}
+
+Las variables son definidas en cada Vista/Componente por lo que estan fuertemente ligadas a ellos. La variables se integran en un diccionario que es pasado a todos los
+componentes hijos, por lo que una variable insertada en un componente padre podra ser accedida en un componente hijo.
+Tambien acepta sintaxis de objetos
+
+        {{objeto.propiedad}}
+
+No evalua metodos.
+
+La tercera caracteristica es la integracion de bucles foreach en el html, como atributo. Sun sintaxis es la que sigue:
+
+   dsFor="coleccion as elemento"
+
+Donde coleccion es una variable insertada por el programador en algun componente desde el que se tenga acceso y elemento sera la variable a usar en cada iteracion. Se creara
+una entrada en el diccionario con ese nombre y con el valor de cada iteracion.
+
+dsFor es un atributo y se coloca en el nodo html padre de lo que se quiera repetir.
+
+      <tbody dsFor="coleccion as elemento">
+             <tr>
+                <td>{{elemento.campo}}</td>
+             </tr>
+      </tbody>
+
+En este caso repetira el tr y descendientes por cada elemento de coleccion, expandiendo en este caso "elemento" es un objeto y el campo "campo" es una propiedad de esa clase
+y se expando al valor de dicha variable para cada iteracion.
+
+
+La ultima caracteristica es los atributos data-. El programa procesara los atributos data-nombre creando una variable con el nombre "nombre" y el valor asignado.
+Esta sujeta a la expansion de variables por lo que se podra asignar un valor de una variable a la variable recien creada con data-. Estas variables son pasadas en
+el diccionario a los nodos descendientes del nodo que contenga el atributo data-.
+Si se asigna una variable en el atributo data-, ademas de la creacion de la nueva varable y la asignacion del valor pertinente, se sustituira el nombre de dicha
+variable por el valor de la misma, con lo que en el html el atributo tendra un valor significativo para la aplicacion.
+
+
+
+SETUP
