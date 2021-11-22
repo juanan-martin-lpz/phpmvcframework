@@ -6,24 +6,75 @@ namespace GestionComercial\Controllers;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
+/**
+ * Implementacion estandar para el Router de la aplicacion
+ *
+ *
+ *
+ * @author Juan Martin Lopez juanan.martin.lpz@gmail.com
+ * @category class
+ *
+ */
+
 class DefaultRouter implements IRouter {
 
-    private array $routes;
-    private $parser;
+    private array $routes;  // Array de rutas
 
-    public function __construct(/* $parser = null */) {
+    /**
+     * Constructor de la clase
+     */
 
-        //$this->parser = $parser;
-        //$this->registry = $registry;
+    public function __construct() {
 
         $this->routes = [];
     }
 
+    /**
+     * Añade la ruta al array asociativo de rutas con el controlador como valor
+     *
+     *
+     * @param string $route La ruta a añadir
+     * @param IController $controllet El controlador a usar en dicha ruta
+     *
+     * @api
+     */
+
     public function add(string $route, IController $controller) {
-        // Parser
-        // $controler->setParser($this->parser);
+
         $this->routes[$route] = $controller;
+
     }
+
+    /**
+     * Retornamos un array con las rutas manejadas
+     *
+     *
+     * @api
+     */
+
+    public function getRoutes() {
+
+        return array_keys($this->routes);
+    }
+
+    /**
+     * Metodo para invocar el controlador necesario para la ruta pasada en la $request
+     *
+     * Analiza la ruta pasada en $request e invoca al controlador necesario
+     * La ruta puede ser de dos tipos: parcial o completa
+     * Una ruta completa es la que se encuentra directamente dentro del array de rutas
+     * Una ruta parcial es la que no se encuentra directamente dentro del array de rutas pero es susceptible
+     * de que alguna de las rutas existentes coincidan con parte del comienzo de la ruta solicitada
+     * En ese caso, se invocara el Controlador de la ruta coincidente pasandole el resto de la ruta como parametros
+     * en un array
+     * Si no se encuentra la ruta se devuelve un 404.
+     *
+     * @param Array $request La request pasada por el Dispatcher
+     *
+     * @api
+     *
+     * @todo Enlazar con el mecanismo de 404
+     */
 
     public function route($request) {
 
@@ -36,11 +87,13 @@ class DefaultRouter implements IRouter {
 
         $controller = null;
 
+        // Si existe una ruta completa....
         $controller = @$this->routes[$request['url']];
 
         // Ruta parcial
         if (!$controller) {
-            // Parcial
+
+            // Recorremos las rutas y miramos a ver si hay alguna que nos sirva
             foreach($this->routes as $route => $control) {
 
                 if (str_starts_with($request['url'], $route)) {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mantenimiento - Tipos de IVA</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/Views/css/estilos.css" type="text/css" media="screen" />
+    </head>
+
+    <body>
+
+        <app-header />
+
+        <div class="contenedor">
+            <h1 class="text-center">Nuevo Tipo de IVA</h1>
+
+            <form class="form" method="POST" action="/tiposiva">
+                <fieldset class="tipos-iva-new">
+                <legend>Tipo de IVA</legend>
+                <div class="campo">
+                    <label for="descripcion_tipo_iva">Descripcion</label>
+                    <input type="text" id="descripcion_tipo_iva" name="descripcion_tipo_iva" value="[[data.idtipo_iva]]"><br>
+                </div>
+                <div class="campo">
+
+                    <label for="tipo_iva">% Tipo IVA</label>
+                    <input type="text" id="tipo_iva" name="tipo_iva" value="[[data.tipo_iva]]"><br>
+                </div>
+
+                <button class="boton-editar" type="submit" id="submitbtn">Enviar</button>
+                <button class="boton-borrar" type="reset" id="cancelbtn">Limpiar</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <app-footer />
+    </body>
+
+</html>

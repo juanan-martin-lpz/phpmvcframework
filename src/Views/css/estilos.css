@@ -18,6 +18,7 @@ body {
     display: grid;
     /** Tenemos unas medidas muy extrañas */
     grid-template-rows: 0.8fr 4.8fr 0.6fr;
+
 }
 
 h1 {
@@ -82,8 +83,45 @@ td {
 
 table {
     max-width: 1200px;
+    overflow-y: scroll;
 }
 
+
+/** Forms */
+.form {
+    display: block;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6rem;
+}
+
+.form fieldset {
+    margin: 0 auto;
+}
+
+
+.form input {
+    margin: 5px 0 5px 0;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6rem;
+
+}
+
+.form button {
+    margin: 10px 0 10px 10px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+}
+
+.campo label {
+    flex-basis: 10rem;
+}
+
+.campo input {
+    flex: 1;
+}
 /** Componentes */
 
 /** Cabeceras de grid */
@@ -126,13 +164,13 @@ table {
 }
 
 .footer p {
-    padding-top: 4rem;
+    padding-top: 2.5rem;
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
 }
 
 div h1 {
-    padding: 6rem;
+    padding: 2rem;
 }
 
 /** Botones */
@@ -217,6 +255,18 @@ div h1 {
 
 
 /** Tipos Iva */
+
+.tipos-iva-edit {
+    margin: 0 auto;
+    width: 50rem;
+    height: 18rem;
+}
+
+.tipos-iva-new {
+    margin: 0 auto;
+    width: 50rem;
+    height: 16rem;
+}
 
 div h2 {
     color: #284B63;

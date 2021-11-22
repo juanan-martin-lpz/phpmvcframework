@@ -59,6 +59,8 @@ ACCESO A DATOS
 
 NOTAS DE IMPLEMENTACION
 
+      * PROYECTO
+        Se usa autload con PSR-4 a traves de composer.
 
       * DISEÑO DE LOS COMPONENTES
         Los componentes se ha diseñado de forma expresa para que tengan tres filas en un layout de grid: header, main y footer, los tres representados por divs.
@@ -88,6 +90,14 @@ Tambien acepta sintaxis de objetos
         {{objeto.propiedad}}
 
 No evalua metodos.
+
+La segunda forma de expansion es
+
+   [[objeto.propiedad]]
+   [[objeto.metodo]]
+
+Si existe el objeto o variable se pondra su valor y si no el valor ira en blanco.
+Si evalua metodos.
 
 La tercera caracteristica es la integracion de bucles foreach en el html, como atributo. Sun sintaxis es la que sigue:
 

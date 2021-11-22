@@ -23,35 +23,11 @@ function debug_to_console($data) {
 $cfg = Config::fromJSON('Config/dbconfig.json');
 DB::setDatabaseConfig($cfg);
 
-// Crear el Registro
-//-------------------------------------------------------------------
-
-
-/* Añadir todos los componentes de la aplicacion cual Angular caso se tratara */
-
-/*
-
-ComponentRegistry::add('login-component','LoginComponent');
-ComponentRegistry::add('login-header-component','LoginHeaderComponent', 'LoginComponent');
-ComponentRegistry::add('login-footer-component','LoginFooterComponent', 'LoginComponent');
-
-
-*/
-
-
-//-------------------------------------------------------------------
-
-Registry::add('boton-nuevo','\GestionComercial\Views\Componentes\BotonNuevo');
-Registry::add('botonera-tiposiva','\GestionComercial\Views\Componentes\BotoneraTiposIva');
-
-Registry::add('app-header','\GestionComercial\Views\Componentes\AppHeader');
-Registry::add('app-footer','\GestionComercial\Views\Componentes\AppFooter');
-
-Registry::add('grid-tiposiva','\GestionComercial\Views\Componentes\GridTiposIva');
+require $_SERVER['DOCUMENT_ROOT'] . '/registerComponents.php';
 
 
 // Crear las rutas de la aplicacion, requiere de los controladores especificos, pero solo haremos un require_once
-$router = new Controllers\DefaultRouter(/* parser */);
+$router = new Controllers\DefaultRouter();
 //
 
 $router->add('/tiposiva', new Controllers\TiposIvaController(/* $parser */));

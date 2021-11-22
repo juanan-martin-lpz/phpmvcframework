@@ -8,51 +8,26 @@ namespace GestionComercial\Models;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
+
+/**
+ * Clase base para los Modelos de datos
+ *
+ * Contiene una mezcla de metdodos estaticos y metodos de instancia para su extension en las clases
+ * hijas, que seran las que concreten un determinado Modelo de datos
+ *
+ *
+ * @author Juan Martin Lopez juanan.martin.lpz@gmail.com
+ * @category class
+ *
+ * @todo Conciliar el nombre de la tabla dado por el usuario y el metodo findAll, que usa el nombre de la clase.
+ * @todo Metodo findById
+ * @todo Metodo findByPred
+ *
+ */
+
 abstract class ModelBase {
 
-    //private static $connection = null;
-
-    protected string $tablename;
-
-    //private static ?DatabaseConfig $config = null;
-
-
-    /*
-      Abrimos la conexion
-    */
-    /*
-    protected static function connect() {
-
-        // De donde sacamos los params???
-
-        if (self::$config != null ) {
-
-            //self::$connection = mysqli_connect(self::$config->host, self::$config->user, self::$config->password, self::$config->databasename, self::$config->port );
-
-            self::$connection = new PDO( self::$config->driver . ':host=' . self::$config->host . ';port=' . self::$config->port . ';dbname=' . self::$config->databasename,  self::$config->user, self::$config->password);
-
-            if (!self::$connection) {
-
-                die("Error al conectar : " . mysqli_error(self::$connection));
-            }
-
-        }
-        else {
-            return false;
-        }
-    }
-    */
-    /*
-      Cerramos la conexion
-    */
-    /*
-    protected static function close() {
-
-        self::$connection = null;
-
-    }
-
-    */
+    protected string $tablename;     // Nombre de la tabla, por defecto sera el de la clase.
 
     /*
       Retornamos todos los registros en forma de array de objetos del tipo de la clase llamadora
@@ -60,6 +35,22 @@ abstract class ModelBase {
       No podemos tipar el parametro por que esperaria una instancia de la clase y tan solo tiene metodos estaticos
       aunque comprobamos su tipo y si no coinciden saltamos.
     */
+
+    /**
+     * Recupera todos los registro de la tabla
+     *
+     * Retornamos todos los registros en forma de array de objetos del tipo de la clase llamadora
+     * Recibe una clase de factoria implementando el interfec IConcreteModelFactory
+     * No podemos tipar el parametro por que esperaria una instancia de la clase y tan solo tiene metodos estaticos
+     * aunque comprobamos su tipo y si no coinciden saltamos.
+     *
+     * @param IConcreteModelFactory $factory Una instancia de Factoria de datos
+     *
+     * @return Array Retorna un array de objetos con todos los registros de la
+     *
+     * @api
+     */
+
     public static function findAll( $factory = null) {
 
         if (!gettype($factory) == 'IConcreteModelFactory' && $factory != null) {
@@ -73,36 +64,6 @@ abstract class ModelBase {
         $sql = "SELECT * FROM " . strtoupper($tabla) . ';';
 
         $result = Database::query($sql, $factory);
-
-        /*
-        // conectar
-        self::connect();
-
-        // ejecutar
-        $stmt = self::$connection->query($sql);
-
-        $result = [];
-
-
-        // Recuperamos los registros uno a uno y creamos un array de objetos
-        // Pudiera llegar a ser lento si hay muchas filas a devolver
-
-        if ($factory) {
-            while($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                $result[] = $factory::fromAssoc($obj);
-            }
-        }
-        else {
-            while($obj = $stmt->fetchObject()) {
-
-                $result[] = $obj;
-            }
-        }
-
-        // cerrar
-        self::close();
-        */
 
         // devolver
         return $result;
@@ -118,15 +79,38 @@ abstract class ModelBase {
 
     }
 
+    /**
+     * Recupera el registro de la tabla identificado con el id pasado
+     *
+     * @param int $id El id a buscar
+     *
+     * @return Object Retorna un objeto con el registro encontrado o null
+     *
+     * @api
+     */
+
     public static function findById(int $id) {
 
     }
+
 
     public static function findByPred(string $predicate) {
 
     }
 
+    /**
+     * Funcion abstracta para gestionar el guardado del objeto
+     *
+     * @api
+     */
+
     abstract public function save();
+
+    /**
+     * Funcion abstracta para gestionar el borrado del objeto
+     *
+     * @api
+     */
 
     abstract public function delete();
 
@@ -134,26 +118,18 @@ abstract class ModelBase {
         return $this->tablename;
     }
 
+    /**
+     * Establece el nombre de la tabla
+     *
+     * @param string $tablename Nombre a usar en lugar del nombre de la clase
+     *
+     * @api
+     */
+
     public function setTableName(string $tablename) {
         if ($tablename != '') {
             $this->tablename = $tablename;
         }
     }
-
-    /*
-    public static function setDatabaseConfig(DatabaseConfig $config) {
-
-        if ($config == null) {
-            die("Configuracion de base de datos invalida");
-        }
-        else {
-            self::$config = $config;
-        }
-    }
-
-    public static function getDatabaseConfig() {
-        return self::$config;
-    }
-    */
 }
 ?>

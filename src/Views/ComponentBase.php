@@ -46,7 +46,18 @@ abstract class ComponentBase implements IRenderizable {
         //print_r($dict);
 
         if ($this->data != null){
-            $dict = array_merge($this->data, $dict);
+            if ($dict != null) {
+                if (is_array($this->data)) {
+                    $dict = array_merge($this->data, $dict);
+                }
+                else {
+                    $dict['data'] = $this->data;
+                }
+            }
+            else {
+                $dict['data'] = $this->data;
+            }
+
         }
 
         $this->checkComponent($node, $dict);
@@ -258,8 +269,17 @@ abstract class ComponentBase implements IRenderizable {
                             @$obj = $dict[$var2[0]];
                             $prop = $var2[1];
 
+                            $v = "";
 
-                            $dict[$varname] = $obj->$prop;
+                            if (method_exists($obj, $prop)) {
+                                $v = $obj->{$prop}();
+                            }
+                            else {
+                                $v = $obj->$prop;
+                            }
+
+
+                            $dict[$varname] = $v;
 
                         }
                         else {
@@ -270,6 +290,65 @@ abstract class ComponentBase implements IRenderizable {
                         $dict[$varname] = $a->nodeValue;
                     }
 
+                }
+
+                $regExpandVarOpt = "/\[{2}.*\]{2}/";
+
+                //var_dump($n);
+                //echo "<br>";
+
+                // OK
+                if (@preg_match($regExpandVarOpt, $a->nodeValue)) {
+
+                    $m = [];
+
+                    @preg_match($regExpandVarOpt, $a->nodeValue, $m);
+
+
+                    $varname = trim(trim($m[0], "["), "]");
+
+                    $var = explode('.', $varname);
+
+                    // Sustituir textContent por el valor de $dict[$varname]
+                    if (count($var) > 1) {
+
+                        @$obj = $dict[$var[0]];
+                        $prop = $var[1];
+
+                        if ($obj == null) {
+                            $n->removeAttribute($a->nodeName);
+                            $n->setAttribute($a->nodeName, "");
+                        }
+                        else {
+                            $v = "";
+
+                            if (method_exists($obj, $prop)) {
+                                $v = $obj->{$prop}();
+                            }
+                            else {
+                                $v = $obj->$prop;
+                            }
+
+                            $val = @preg_replace($regExpandVarOpt, $v, $a->nodeValue);
+
+                            $n->removeAttribute($a->nodeName);
+                            $n->setAttribute($a->nodeName, $val);
+                        }
+
+
+                    }
+                    else {
+                        if (is_set($dict[$var[0]])) {
+                            $val = @preg_replace($regExpandVar, $dict[$var[0]], $a->nodeValue);
+
+                            $n->removeAttribute($a->nodeName);
+                            $n->setAttribute($a->nodeName, $val);
+                        }
+                        else {
+                            $n->removeAttribute($a->nodeName);
+                            $n->setAttribute($a->nodeName, "");
+                        }
+                    }
                 }
 
 
@@ -331,7 +410,9 @@ abstract class ComponentBase implements IRenderizable {
                     //print_r($expr);
                     //echo "<br>";
 
-                    if (!$expr) {
+                    $value = $dict[$expr];
+
+                    if (!$value) {
                         // Si evalue a false nos cargamos el nodo y sus descendientes
                         $parent = $n->parentNode;
 

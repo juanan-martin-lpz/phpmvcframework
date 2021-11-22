@@ -17,7 +17,7 @@ class TiposIvaDefaultView extends Component {
 
         $this->html = file_get_contents('Views/Mantenimientos/html/tiposiva.html');
 
-        $this->dom = $this->intepretDOM($this->data);
+        $this->dom = $this->intepretDOM();
 
         return $this->dom;
     }

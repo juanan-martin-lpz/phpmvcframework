@@ -7,8 +7,12 @@ namespace GestionComercial\Controllers;
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use GestionComercial\Controllers\Actions\TiposIva as Actions;
+use GestionComercial\Models as Models;
+use GestionComercial\Models\Database as Database;
 
 class TiposIvaController extends ControllerBase {
+
+    private $data;
 
     public function __construct() {
 
@@ -16,6 +20,8 @@ class TiposIvaController extends ControllerBase {
         // Otras quizas no porque sean solo html
 
         $this->addAction('', new Actions\TiposIvaDefaultAction());
+        $this->addAction('new', new Actions\TiposIvaNewAction());
+        $this->addAction('edit', new Actions\TiposIvaEditAction());
 
     }
 
@@ -31,33 +37,74 @@ class TiposIvaController extends ControllerBase {
         if (isset($request['params']) && $request['params']) {
             // No controlamos el count
             $action = $request['params'][0];
-            $data = $request['params'][1];
-        }
 
-        if ($action == null) {
+            @$id = $request['params'][1];
 
-            return parent::doGet($request);
-        }
-        /*
+            if ($id != null) {
+                $sql = "SELECT * FROM TIPOS_IVA WHERE idtipo_iva = :id";
 
-        if ($request['query']) {
+                $params[':id'] = [$id, \PDO::PARAM_INT];
 
-            $items = explode(';', $request['query']);
+                $result = Database::query($sql, $params);
 
-            foreach($items as $item) {
-                $ite = explode('=',$item);
-                $action = $ite[1];
+                if (!empty($result)) {
+                    $data = $result[0];
+                }
             }
+            else {
+                @$data = intval($request['params'][1]);
+            }
+
         }
 
-        return "Hola desde el controlador. Me pides que haga $action contra el id $data";
-        */
+        $request['params'][0] = $action;
+        $request['params'][1] = $data;
 
-        // Llamar al doGet del padre si la accion sera ejecutar una IAction
+        return parent::doGet($request);
+
     }
 
     public function doPost($request): string
     {
+        $tipo = new Models\Tipos_Iva();
+
+        if (isset($_POST['idtipo_iva'])) {
+            $tipo->setIdTipoIva($_POST['idtipo_iva']);
+        }
+
+        $tipo->setDescripcion($_POST['descripcion_tipo_iva']);
+        $tipo->setTipoIva(floatval($_POST['tipo_iva']));
+
+        $this->data = $tipo;
+
+        try {
+            if ($tipo->save()) {
+
+                $request['method'] = 'GET';
+                $request['url'] = "/tiposiva";
+                $request['query'] = "";
+
+                return $this->doGet($request);
+            }
+        }
+        catch (\PDOException $ex) {
+
+            // Gestion de errores. Aun por confirmar el modo
+
+            $req['method'] = 'GET';
+            $req['url'] = "/tiposiva";
+
+            if ($tipo->getIdTipoIva() == null || $tipo->getIdTipoIva() == 0) {
+                $req['params'] = ["new", $tipo];
+            }
+            else {
+                $req['params'] = ["edit", $tipo];
+            }
+
+            return $this->doGet($req);
+
+            //return $ex->getMessage();
+        }
 
     }
 }
