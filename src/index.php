@@ -6,7 +6,7 @@
 
 namespace GestionComercial;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 use GestionComercial\CL\Parser\ComponentRegistry as Registry;
 use GestionComercial\Models\DatabaseConfig as Config;

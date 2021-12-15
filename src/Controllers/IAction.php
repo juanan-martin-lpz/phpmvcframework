@@ -2,7 +2,7 @@
 
 namespace MVCLite\Controllers;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 /**
  * Interfaz para el control de las Acciones

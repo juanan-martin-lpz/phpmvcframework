@@ -2,7 +2,7 @@
 
 namespace MVCLite\Views;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 class View implements IRenderizable {
 

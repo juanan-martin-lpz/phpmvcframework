@@ -4,7 +4,7 @@
 
 namespace MVCLite\Controllers;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 /**
  * Despacha las peticiones recibidas por la aplicacion al router

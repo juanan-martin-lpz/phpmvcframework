@@ -2,7 +2,7 @@
 
 namespace MVCLite\Internal;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 /**
  * Clase para interactuar con las credenciales de usuario

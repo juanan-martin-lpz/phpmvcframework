@@ -2,7 +2,7 @@
 
 namespace MVCLite\Registry;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 
 class ComponentRegistry {
