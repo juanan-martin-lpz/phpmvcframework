@@ -2,7 +2,7 @@
 
 //require_once 'IController.php';
 
-namespace GestionComercial\Controllers;
+namespace MVCLite\Controllers;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 

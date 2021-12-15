@@ -1,5 +1,5 @@
 {
-    "name": "blackraider/gestioncomercial",
+    "name": "blackraider/mvclite",
     "authors": [
         {
             "name": "juanan-martin-lpz",
@@ -10,17 +10,10 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
-      "psr-4": {"GestionComercial\\": ".",
-                "GestionComercial\\Controllers\\": "./Controllers/",
-                "GestionComercial\\Controllers\\Actions\\Pedidos\\": "./Controllers/Actions/Pedidos/",
-                "GestionComercial\\Models\\": "./Models/",
-                "GestionComercial\\Views\\": "./Views/",
-                "GestionComercial\\Views\\Pedidos\\": "./Views/Pedidos",
-                "GestionComercial\\CL\\Parser\\": "./CL/Parser/",
-                "GestionComercial\\CL\\Parser\\Contexts\\": "./CL/Parser/Contexts/"
+      "psr-4": {"MVCLite\\": ".",
+                "MVCLite\\Controllers\\": "./Controllers/",
+                "MVCLite\\Models\\": "./Models/",
+                "MVCLite\\Views\\": "./Views/"
                }
-    },
-    "scripts": {
-      "serve": "php -S localhost:3200 -t ."
     }
 }

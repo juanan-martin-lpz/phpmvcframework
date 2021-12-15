@@ -1,11 +1,11 @@
 <?php
 
-namespace GestionComercial\Views;
+namespace MVCLite\Views;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use GestionComercial\Views\IRenderizable as IRenderizable;
-use GestionComercial\CL\Parser\ComponentRegistry as Registry;
+use MVCLite\Views\IRenderizable as IRenderizable;
+use MVCLite\Registry\ComponentRegistry as Registry;
 
 abstract class ComponentBase implements IRenderizable {
 
