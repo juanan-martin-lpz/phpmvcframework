@@ -10,10 +10,10 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
-      "psr-4": {"MVCLite\\": ".",
-                "MVCLite\\Controllers\\": "./Controllers/",
-                "MVCLite\\Models\\": "./Models/",
-                "MVCLite\\Views\\": "./Views/"
+      "psr-4": {"MVCLite\\": "src",
+                "MVCLite\\Controllers\\": "src/Controllers/",
+                "MVCLite\\Models\\": "src/Models/",
+                "MVCLite\\Views\\": "src/Views/"
                }
     }
 }
