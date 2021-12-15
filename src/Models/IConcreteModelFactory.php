@@ -1,6 +1,6 @@
 <?php
 
-namespace GestionComercial\Models;
+namespace MVCLite\Models;
 
 require '../vendor/autoload.php';
 

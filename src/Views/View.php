@@ -1,6 +1,6 @@
 <?php
 
-namespace GestionComercial\Views;
+namespace MVCLite\Views;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 

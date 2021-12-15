@@ -1,6 +1,6 @@
 <?php
 
-namespace GestionComercial\Internal;
+namespace MVCLite\Internal;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 

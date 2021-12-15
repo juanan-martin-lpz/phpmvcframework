@@ -2,13 +2,13 @@
 
 //require_once 'IRouter.php';
 
-namespace GestionComercial\Controllers;
+namespace MVCLite\Controllers;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-use GestionComercial\Internal\SessionStorage;
-use GestionComercial\Internal\Credential;
-use GestionComercial\Internal\Storage;
+use MVCLite\Internal\SessionStorage;
+use MVCLite\Internal\Credential;
+use MVCLite\Internal\Storage;
 
 /**
  * Implementacion estandar para el Router de la aplicacion
