@@ -1,13 +1,13 @@
-MVCLite
+PROYECTO FIN DE CURSO IFCD0112 - ADF
 
-Framework MVC Ligero para PHP
+PROGRAMACION ORIENTADA A OBJETOS CON BASES DE DATOS RELACIONALES
 
 AUTOR: Juan Antonio Martin
 
 OBJETIVOS DEL PROYECTO
 
-El proyecto pretende llevar a cabo una Framework MVC ligero, sin inyeccion de dependencias ni grandes florituras siguiendo un patron/arquitectura
-Modelo-Vista-Controlador basado en cierto modo en la forma de funcionar de Angular, basado en componentes
+El proyecto pretende llevar a cabo una Gestion de Compras, para lo que se realizo en el Modulo 2 del curso la base de datos,
+siguiendo un patron/arquitectura Modelo-Vista-Controlador basado en cierto modo en la forma de funcionar de Angular, basado en componentes
 solo que adaptado para el lado del servidor. El proyecto presenta un pequeño interprete de codigo para la vistas de forma que se puedan integrar dentro
 de la generacion de las vistas/componentes los datos de usuario necesarios para cada caso.
 

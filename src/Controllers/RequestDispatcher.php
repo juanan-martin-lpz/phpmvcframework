@@ -37,9 +37,9 @@ class RequestDispatcher {
      * @api
      */
 
-    public function __construct(IRouter $router) {
+    public function __construct() {
 
-        $this->routers[] = $router;
+        //$this->routers[] = $router;
         //$this->router = $router;
     }
 
@@ -71,10 +71,39 @@ class RequestDispatcher {
      */
 
     public function dispatch() {
+
+        $this->setupRoutes();
+
+
         // A ver aqui que hacemos con $_SERVER
         $request['method'] = $_SERVER['REQUEST_METHOD'];
         $request['url'] = $_SERVER['REQUEST_URI'] ?? "/";
         $request['query'] = $_SERVER['QUERY_STRING'] ?? "";
+
+        return $this->_dispatch($request);
+    }
+
+    private function _dispatch($request) {
+
+
+        $r = $this->routes[$request['url']];
+
+        //
+        $response = $r->route($request);
+
+        // Examinamos el tipo de respuesta. Si es del tipo RedirectResponse redireccionamos y no devolvemos la salida estandar
+        if (get_class($response) == 'MVCLite\Controllers\RedirectResponse') {
+            // contentResponse tiene un objeto request. Hacemos la redireccion hacia dicha request
+            $req = $response->contentResponse();
+
+            header('Location: ' . $req['url']);
+        }
+        else {
+            return $response->contentResponse();
+        }
+    }
+
+    private function setupRoutes() {
 
         foreach($this->routers as $router) {
             $rutas = $router->getRoutes();
@@ -83,17 +112,8 @@ class RequestDispatcher {
                 if (!array_key_exists($ruta, $this->routes)) {
                     $this->routes[$ruta] = $router;
                 }
-                else {
-                    // Salvaguarda
-                    die("Error en la configuracion del programa. La ruta $ruta ya se añadio previamente");
-                }
             }
         }
-
-        $r = $this->routes[$request['url']];
-
-        return $r->route($request);
     }
-
 }
 ?>

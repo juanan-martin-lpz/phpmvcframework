@@ -14,7 +14,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
  *
  */
 
-class Credential {
+abstract class Credential {
 
     private $tokenname; // Como se va a llamar el token en el deposito de sesion
 
@@ -40,7 +40,7 @@ class Credential {
      * @api
      */
 
-    public static  function getToken() {
+    public function getToken() {
         if (session_status() == PHP_SESSION_ACTIVE) {
             return $_SESSION[$this->tokenname];
         }
@@ -54,14 +54,16 @@ class Credential {
      * @api
      */
 
-    public static function setToken($token) {
+    public function setToken($token) {
         if (session_status() == PHP_SESSION_ACTIVE) {
             return $_SESSION[$this->tokenname] = $token;
         }
     }
 
     /**
-     * Este metodo devuelve el toke de usuario si la sesion esta activa
+     * Este metodo valida que el token sea correcto
+     *
+     * Metodo abstracto para implementar en las clases especificas.
      *
      * @param string $token El token a validar
      *
@@ -70,12 +72,22 @@ class Credential {
      * @api
      */
 
-    public static function validateToken($token) {
+    abstract public function validateToken($token);
 
-        // Sin implementacion de momento
+    /**
+     * Este metodo genera un token a partir de un usuario
+     *
+     * Metodo abstracto para implementar en las clases especificas.
+     *
+     * @param object $usuario Usuario
+     *
+     * @return string token generado para el usuario pasado
+     *
+     * @api
+     */
 
-        return true;
-    }
+    abstract public function generateToken($usuario);
+
 }
 
 ?>

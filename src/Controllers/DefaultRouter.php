@@ -126,9 +126,9 @@ class DefaultRouter implements IRouter {
         // Segun el metodo, llamamos al metodo controlador oportuno
         switch (strtoupper($request['method'])) {
         case 'GET':
-            return $controller->doGet($request);
+            return new HtmlResponse($controller->doGet($request));
         case 'POST':
-            return $controller->doPost($request);
+            return new HtmlResponse($controller->doPost($request));
         }
     }
 }

@@ -23,6 +23,8 @@ use MVCLite\Internal\Storage;
 class SecuredRouter extends DefaultRouter {
 
     private IController $loginContoller;
+    private Credential $credentialAdmin;
+
     private string $token;
 
     /**
@@ -32,11 +34,13 @@ class SecuredRouter extends DefaultRouter {
      *
      */
 
-    public function __construct($loginCtrl) {
+    public function __construct($loginCtrl, $credentialAdmin) {
 
         parent::__construct();
 
         $this->loginController = $loginCtrl;
+        $this->credentialAdmin = $credentialAdmin;
+
         $this->add('/login', $this->loginController);
 
     }
@@ -57,24 +61,46 @@ class SecuredRouter extends DefaultRouter {
 
     public function route($request) {
 
-        // Obtener el token
+        // Si es una ruta directa y el metodo es POST, es decir la url es /login tenemos dos opciones
+        // o redirigimos a la ruta principal segura o redirigimos a la pagina principal
+        // almacenando el token en el Storage
 
-        $this->token = Credential::getToken();
+        if ($request['url'] == '/login' && $request['method'] == 'POST') {
 
-        // Validar el token
+            $req['method'] = 'GET';
+            $req['url'] = "/";
+            $req['query'] = "";
 
-        if (!Credential::validateToken($this->token)) {
-            // Si el token no es valido redirigir a login y almacenar la request en el Storage
-            // El storage se elimina en el controlador de login una vez aceptadas las credenciales de usuario
-            Storage::setValue('pendingUrl', $request['url']);
-            $request['url'] = '/login';
+            return new RedirectResponse($req);
         }
+        else {
+            if ($request['url'] == '/login' && $request['method'] == 'GET') {
+                return parent::route($request);
+            }
+            else {
+                // Si no es ruta directa, procedemos de otra forma
+                // Obtener el token
+                $this->token = $this->credentialAdmin->getToken() ?? "";
 
+                // Si se trata de entrar en una ruta segura y no hay token, redirigimos a login
+                // Si el token es valido y tenemos una url pendiente
+                if ($this->credentialAdmin->validateToken($this->token) && Storage::getValue('pendingUrl') != null) {
+                    $request['url'] = Storage::getValue('pendingUrl');
+                    Storage::deleteKey('pendingUrl');
+                }
+                else {
+                    // Validar el token
+                    if (!$this->credentialAdmin->validateToken($this->token)) {
+                        // Si el token no es valido redirigir a login y almacenar la request en el Storage
+                        // El storage se elimina en el controlador de login una vez aceptadas las credenciales de usuario
+                        Storage::setValue('pendingUrl', $request['url']);
+                        $request['url'] = '/login';
+                    }
+                }
 
-        parent::route($request);
-
-
-
+                return new HtmlResponse($request);
+            }
+        }
     }
 }
 ?>

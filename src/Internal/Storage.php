@@ -51,7 +51,7 @@ class Storage {
      * @api
      */
 
-    public static function deleteKey($key, $value) {
+    public static function deleteKey($key) {
         setcookie($key, null, time() - 1000, '/');
     }
 

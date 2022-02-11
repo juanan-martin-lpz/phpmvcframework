@@ -91,10 +91,39 @@ abstract class ModelBase {
 
     public static function findById(int $id) {
 
+        // El campo id se llama, ID
+
+        $path = explode('\\', get_called_class());
+
+        $tabla = end($path);
+
+        $sql = "SELECT * FROM " . strtoupper($tabla) . ' WHERE ID= :id;';
+
+        $params['id'] = [id, PDO::PARAM_INT];
+
+        $result = Database::query($sql, $params );
+
+        // devolver
+        return $result;
+
     }
 
 
-    public static function findByPred(string $predicate) {
+    public static function findByPred(string $predicate, $params) {
+
+        // El predicado es pasado por las clases implementadoras segun necesidades
+        // Es pasada a la DAO as-is
+
+        $path = explode('\\', get_called_class());
+
+        $tabla = end($path);
+
+        $sql = "SELECT * FROM " . strtoupper($tabla) . ' WHERE ' . $predicate;
+
+        $result = Database::query($sql, $params );
+
+        // devolver
+        return $result;
 
     }
 
