@@ -1,19 +1,22 @@
 {
     "name": "blackraider/mvclite",
-    "authors": [
-        {
-            "name": "juanan-martin-lpz",
-            "email": "juanan.martin.lpz@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "juanan-martin-lpz",
+        "email": "juanan.martin.lpz@gmail.com"
+    }],
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
-      "psr-4": {"MVCLite\\": "src",
-                "MVCLite\\Controllers\\": "src/Controllers/",
-                "MVCLite\\Models\\": "src/Models/",
-                "MVCLite\\Views\\": "src/Views/"
-               }
+        "psr-4": {
+            "MVCLite\\": "src",
+            "MVCLite\\Controllers\\": "src/Controllers/",
+            "MVCLite\\Models\\": "src/Models/",
+            "MVCLite\\Views\\": "src/Views/",
+            "MVCLite\\Registry\\": "src/Registry/"
+        }
     }
 }

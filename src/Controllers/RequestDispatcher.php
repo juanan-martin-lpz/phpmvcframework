@@ -4,7 +4,7 @@
 
 namespace MVCLite\Controllers;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 /**
  * Despacha las peticiones recibidas por la aplicacion al router
@@ -85,8 +85,7 @@ class RequestDispatcher {
 
     private function _dispatch($request) {
 
-
-        $r = $this->routes[$request['url']];
+        $r = $this->getRouter($request['url']);
 
         //
         $response = $r->route($request);
@@ -101,6 +100,18 @@ class RequestDispatcher {
         else {
             return $response->contentResponse();
         }
+    }
+
+    private function getRouter($r) {
+        $result = null;
+
+        foreach ($this->routes as $route => $router ) {
+            if (str_starts_with($r, $route)) {
+                $result = $router;
+            }
+        }
+
+        return $result;
     }
 
     private function setupRoutes() {

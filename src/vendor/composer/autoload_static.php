@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit698d37acd13904dfdfb823731e97332f
+class ComposerStaticInitd477c9f8a84ec40245e786b26b457097
 {
     public static $files = array (
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -33,6 +33,7 @@ class ComposerStaticInit698d37acd13904dfdfb823731e97332f
         'M' => 
         array (
             'MVCLite\\Views\\' => 14,
+            'MVCLite\\Registry\\' => 17,
             'MVCLite\\Models\\' => 15,
             'MVCLite\\Controllers\\' => 20,
             'MVCLite\\' => 8,
@@ -69,19 +70,23 @@ class ComposerStaticInit698d37acd13904dfdfb823731e97332f
         ),
         'MVCLite\\Views\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Views',
+            0 => __DIR__ . '/../../..' . '/src/Views',
+        ),
+        'MVCLite\\Registry\\' => 
+        array (
+            0 => __DIR__ . '/../../..' . '/src/Registry',
         ),
         'MVCLite\\Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Models',
+            0 => __DIR__ . '/../../..' . '/src/Models',
         ),
         'MVCLite\\Controllers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src/Controllers',
+            0 => __DIR__ . '/../../..' . '/src/Controllers',
         ),
         'MVCLite\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../../..' . '/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -725,9 +730,9 @@ class ComposerStaticInit698d37acd13904dfdfb823731e97332f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit698d37acd13904dfdfb823731e97332f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit698d37acd13904dfdfb823731e97332f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit698d37acd13904dfdfb823731e97332f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd477c9f8a84ec40245e786b26b457097::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd477c9f8a84ec40245e786b26b457097::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd477c9f8a84ec40245e786b26b457097::$classMap;
 
         }, null, ClassLoader::class);
     }

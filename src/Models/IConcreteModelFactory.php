@@ -2,7 +2,7 @@
 
 namespace MVCLite\Models;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 /**
  * Interfaz para crear objetos personalizados de un determinado modelo

@@ -6,16 +6,21 @@
 
 namespace MVCLite\Models;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+use ReflectionClass;
+
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 
 /**
  * Clase base para los Modelos de datos
  *
- * Contiene una mezcla de metdodos estaticos y metodos de instancia para su extension en las clases
+ * Contiene una mezcla de metodos estaticos y metodos de instancia para su extension en las clases
  * hijas, que seran las que concreten un determinado Modelo de datos
- *
- *
+ * Es MUY IMPORTANTE, que ante la falta de Anotaciones, los getters y setters del campo ID de cada tabla particular se llame
+ * [get|set]Id<nombre de campo en la tabla>, como por ejemplo getIdTipo_Iva
+ * El metodo estatico findById hace uso de esa nomenclatura para buscar por Id.
+ * Si no se desea esta opcion se puede usar la busqueda findByPred
+ * 
  * @author Juan Martin Lopez juanan.martin.lpz@gmail.com
  * @category class
  *
@@ -54,7 +59,7 @@ abstract class ModelBase {
     public static function findAll( $factory = null) {
 
         if (!gettype($factory) == 'IConcreteModelFactory' && $factory != null) {
-            throw new Exception("La factoria no es del tipo esperado");
+            throw new \Exception("La factoria no es del tipo esperado");
         }
 
         $path = explode('\\', get_called_class());
@@ -82,6 +87,7 @@ abstract class ModelBase {
     /**
      * Recupera el registro de la tabla identificado con el id pasado
      *
+     * @param string idfield El nombre del campo ID
      * @param int $id El id a buscar
      *
      * @return Object Retorna un objeto con el registro encontrado o null
@@ -97,9 +103,9 @@ abstract class ModelBase {
 
         $tabla = end($path);
 
-        $sql = "SELECT * FROM " . strtoupper($tabla) . ' WHERE ID= :id;';
+        $sql = "SELECT * FROM " . strtoupper($tabla) . ' WHERE  ' . self::getIdMethod() . ' = :id;';
 
-        $params['id'] = [id, PDO::PARAM_INT];
+        $params['id'] = [$id, \PDO::PARAM_INT];
 
         $result = Database::query($sql, $params );
 
@@ -108,6 +114,22 @@ abstract class ModelBase {
 
     }
 
+    private static function getIdMethod() {
+
+        $rc = new ReflectionClass(get_called_class());
+
+        $methods = $rc->getMethods();
+
+        $result = null;
+
+        foreach($methods as $method ) {
+            if (str_starts_with(strtolower($method->name), "getid")) {
+                $result = strtolower(substr($method->name,3));
+            }
+        }
+
+        return $result;
+    }
 
     public static function findByPred(string $predicate, $params) {
 

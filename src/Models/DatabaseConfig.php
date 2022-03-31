@@ -2,7 +2,7 @@
 
 namespace MVCLite\Models;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 /**
  * Clase que almacena la configuracion para la conexion a una base de datos

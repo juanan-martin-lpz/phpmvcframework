@@ -2,7 +2,7 @@
 
 namespace MVCLite\Controllers;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 /**
  * Implementacion estandar para el Router de la aplicacion

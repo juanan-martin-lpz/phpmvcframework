@@ -2,7 +2,7 @@
 
 namespace MVCLite\Models;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 /**
  * Implementacion estandar para el acceso a bases de datos via PDO
